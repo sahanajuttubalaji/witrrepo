@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writr - Daily Journal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Writr</h1>
+            <p class="tagline">One thought. Every day.</p>
+        </header>
+
+        <main>
+            <section id="entry-section">
+                <h2>Today's Entry</h2>
+                <div id="entry-form-container">
+                    <form id="entry-form">
+                        <div class="textarea-container">
+                            <textarea id="journal-entry" placeholder="What's on your mind today? (100 characters max)" maxlength="100"></textarea>
+                            <div class="char-counter"><span id="char-count">0</span>/100</div>
+                        </div>
+                        <button type="submit" id="save-button">Save Entry</button>
+                    </form>
+                    <div id="entry-status" class="hidden"></div>
+                </div>
+            </section>
+
+            <section id="history-section">
+                <h2>Past Entries</h2>
+                <div id="entries-container">
+                    <!-- Past entries will be displayed here -->
+                    <p id="no-entries" class="hidden">No past entries yet. Start journaling today!</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>&copy; 2025 Writr - Your Daily Journal App</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

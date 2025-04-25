@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writr - Test Suite</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .test-panel {
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 30px;
+        }
+        
+        .test-panel h2 {
+            margin-top: 0;
+        }
+        
+        .test-button {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin-right: 10px;
+        }
+        
+        .test-button:hover {
+            background-color: #5a6268;
+        }
+        
+        #test-results {
+            margin-top: 20px;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            background-color: #fff;
+            max-height: 300px;
+            overflow-y: auto;
+            font-family: monospace;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Writr</h1>
+            <p class="tagline">Test Suite</p>
+        </header>
+
+        <main>
+            <section id="entry-section">
+                <h2>Today's Entry</h2>
+                <div id="entry-form-container">
+                    <form id="entry-form">
+                        <div class="textarea-container">
+                            <textarea id="journal-entry" placeholder="What's on your mind today? (100 characters max)" maxlength="100"></textarea>
+                            <div class="char-counter"><span id="char-count">0</span>/100</div>
+                        </div>
+                        <button type="submit" id="save-button">Save Entry</button>
+                    </form>
+                    <div id="entry-status" class="hidden"></div>
+                </div>
+            </section>
+
+            <section id="history-section">
+                <h2>Past Entries</h2>
+                <div id="entries-container">
+                    <!-- Past entries will be displayed here -->
+                    <p id="no-entries" class="hidden">No past entries yet. Start journaling today!</p>
+                </div>
+            </section>
+        </main>
+
+        <div class="test-panel">
+            <h2>Test Controls</h2>
+            <button id="run-tests" class="test-button">Run All Tests</button>
+            <button id="clear-storage" class="test-button">Clear Storage</button>
+            
+            <div id="test-results">
+                <p>Test results will appear here...</p>
+            </div>
+        </div>
+
+        <footer>
+            <p>&copy; 2023 Writr - Your Daily Journal App</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="test.js"></script>
+    <script>
+        // Override console.log to display in test-results div
+        const originalConsoleLog = console.log;
+        const originalConsoleError = console.error;
+        const testResults = document.getElementById('test-results');
+        
+        console.log = function() {
+            const args = Array.from(arguments);
+            const message = args.join(' ');
+            
+            // Add to test results
+            const logLine = document.createElement('p');
+            logLine.textContent = message;
+            testResults.appendChild(logLine);
+            
+            // Also log to actual console
+            originalConsoleLog.apply(console, arguments);
+        };
+        
+        console.error = function() {
+            const args = Array.from(arguments);
+            const message = args.join(' ');
+            
+            // Add to test results with error styling
+            const logLine = document.createElement('p');
+            logLine.textContent = '❌ ' + message;
+            logLine.style.color = '#dc3545';
+            testResults.appendChild(logLine);
+            
+            // Also log to actual console
+            originalConsoleError.apply(console, arguments);
+        };
+        
+        // Set up test buttons
+        document.getElementById('run-tests').addEventListener('click', function() {
+            testResults.innerHTML = '';
+            runTests();
+        });
+        
+        document.getElementById('clear-storage').addEventListener('click', function() {
+            testResults.innerHTML = '';
+            clearLocalStorageForTesting();
+        });
+    </script>
+</body>
+</html>
